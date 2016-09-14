@@ -15,31 +15,30 @@ int idleTime;
 
 void setup()
 {
+  Serial.begin(9600);
   leftTargetSpeed =0;
   rightTargetSpeed =0;
   currLSpeed = 0;
   currRSpeed = 0;
-  turnSpeed = 200;
-  driveSpeed = 400;
-  servo.attach(11);
+  turnSpeed = 100;
+  driveSpeed = 100;
   idleTime = 0;
   newIdleTime();
+  turnRight();//temporary
 }
 
 
 
 void loop()
 {
-  forward();//temporary
+  
   getInstructions();
-  if(!timeOut())
-  {
-    currLSpeed = motorSpeedControll(leftTargetSpeed,currLSpeed);
-    currRSpeed = motorSpeedControll(rightTargetSpeed,currRSpeed);
-    motors.setLeftSpeed(currLSpeed);
-    motors.setRightSpeed(currRSpeed);
-  }
-  Serial.println(timeOut());
+  //timeOut();
+  currLSpeed = motorSpeedControll(leftTargetSpeed,currLSpeed);
+  currRSpeed = motorSpeedControll(rightTargetSpeed,currRSpeed);
+  motors.setLeftSpeed(currLSpeed);
+  motors.setRightSpeed(currRSpeed);
+  Serial.println(currRSpeed);
 }
 
 void getInstructions()
@@ -95,8 +94,8 @@ void setSpeedR(int target)
 
 void stopMotors()
 {
-  motors.setLeftSpeed(0);
-  motors.setRightSpeed(0);
+  leftTargetSpeed = 0;
+  rightTargetSpeed = 0;
 }
 
 void newIdleTime()
